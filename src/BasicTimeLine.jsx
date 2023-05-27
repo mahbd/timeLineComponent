@@ -8,6 +8,7 @@ import TimelineDot from '@mui/lab/TimelineDot';
 import {useState} from "react";
 
 export default function BasicTimeLine() {
+    const [refresh, setRefresh] = useState(false);
     const [items, setItems] = useState([
         {
             variant: 'outlined',
@@ -28,31 +29,38 @@ export default function BasicTimeLine() {
             variant: 'outlined',
             color: 'secondary',
             text: 'Repeat'
+        },
+        {
+            variant: 'outlined',
+            color: 'secondary',
+            text: 'Wake'
         }
     ]);
 
     const changeColor = (index) => {
-        const newItem = items[index];
-        newItem.color = prompt("Please enter color:");
+        items[index].color = prompt("Please enter color:");
         setItems(items);
+        setRefresh(!refresh);
     }
 
     const changeText = (index) => {
-        const newItem = items[index];
-        newItem.text = prompt("Please enter text:");
+        items[index].text = prompt("Please enter text:");
         setItems(items);
+        setRefresh(!refresh);
     }
 
     return (
         <div>
             <Timeline position="alternate">
                 {items.map((item, index) =>
-                    <TimelineItem>
+                    <TimelineItem key={index}>
                         <TimelineSeparator>
                             <TimelineDot variant="outlined" onClick={() => changeColor(index)}/>
                             {index !== items.length - 1 && <TimelineConnector/>}
                         </TimelineSeparator>
-                        <TimelineContent onClick={() => changeText(index)} color={item.color}>{item.text}</TimelineContent>
+                        <TimelineContent onClick={() => changeText(index)} color={item.color}>
+                            {item.text}
+                        </TimelineContent>
                     </TimelineItem>)
                 }
             </Timeline>

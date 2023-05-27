@@ -1,4 +1,3 @@
-import './App.css';
 import BasicTimeLine from "./BasicTimeLine";
 
 function App() {
